@@ -22,7 +22,7 @@ To enable an app registration across multiple tenants, you need to:
 
 List and select the appropriate subscription:
 
-```PowerShell
+```powershell
 # List all subscriptions
 az account list --all
 
@@ -37,7 +37,7 @@ az account set -s <subscription_id>
 
 Connect directly to the tenant:
 
-```PowerShell
+```powershell
 # List available tenants
 az account tenant list
 
@@ -49,7 +49,7 @@ az login --tenant <tenant_id> --allow-no-subscriptions
 
 ### Find your app registration
 
-```PowerShell
+```powershell
 # Find app by display name and get its ID
 az ad app list `
     --filter "displayName eq 'YourAppName'" `
@@ -58,7 +58,7 @@ az ad app list `
 
 ### Update the sign-in audience
 
-```PowerShell
+```powershell
 # Configure app registration for multitenant access
 az ad app update `
     --id <app_registration_client_id> `
@@ -80,7 +80,7 @@ Use the same authentication steps from [Step 1](#step-1-connect-to-source-tenant
 
 Once connected to the destination tenant, create the service principal:
 
-```PowerShell
+```powershell
 # Create service principal using the app registration's client ID
 az ad sp create `
     --id <app_registration_client_id>
@@ -92,7 +92,7 @@ This provisions the application in the destination tenant and allows you to assi
 
 To verify the service principal was created successfully:
 
-```PowerShell
+```powershell
 # List service principals by app ID
 az ad sp list `
     --filter "appId eq '<app_registration_client_id>'" `
