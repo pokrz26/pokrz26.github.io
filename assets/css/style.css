@@ -1,5 +1,4 @@
-@import "{{ site.theme }}";
-
+/* Make content wider */
 .inner {
-  max-width: 90%;
+  max-width: 90% !important;
 }
