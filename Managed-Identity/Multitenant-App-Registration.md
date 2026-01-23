@@ -24,13 +24,17 @@ List and select the appropriate subscription:
 
 ```powershell
 # List all subscriptions
-az account list --all
+az account list `
+    --all
 
 # Find specific subscription by name
-az account list --all --query "[?contains(name, 'subscription_name')].{Id:id, Name:name}"
+az account list `
+    --all `
+    --query "[?contains(name, 'subscription_name')].{Id:id, Name:name}"
 
 # Set active subscription
-az account set -s <subscription_id>
+az account set `
+    -s <subscription_id>
 ```
 
 ### If the tenant has no subscription
@@ -42,7 +46,9 @@ Connect directly to the tenant:
 az account tenant list
 
 # Login to specific tenant without subscription
-az login --tenant <tenant_id> --allow-no-subscriptions
+az login `
+    --tenant <tenant_id> `
+    --allow-no-subscriptions
 ```
 
 ## Step 2: Configure Multitenant Support
@@ -53,7 +59,8 @@ az login --tenant <tenant_id> --allow-no-subscriptions
 # Find app by display name and get its ID
 az ad app list `
     --filter "displayName eq 'YourAppName'" `
-    --query '[0].id' -o tsv
+    --query '[0].id' `
+    -o tsv
 ```
 
 ### Update the sign-in audience
