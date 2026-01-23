@@ -3,7 +3,16 @@
 
 @import "{{ site.theme }}";
 
-/* Make content wider */
-.inner {
-  max-width: 90% !important;
+.wrapper {
+  width: 90% !important;
+}
+
+.sidebar {
+  min-width: 250px !important;
+  width: 20% !important;
+}
+
+.section {
+  min-width: 600px !important;
+  width: 80% !important;
 }
