@@ -65,3 +65,83 @@ az rest `
     --method GET `
     --url "https://graph.microsoft.com/v1.0/servicePrincipals/<SOURCE_SP_OBJECT_ID>/appRoleAssignments"
 ```
+
+## Example Usage in C\#
+
+This example demonstrates how to use federated identity authentication in a C# application to access resources across multiple Azure AD tenants.
+
+### Configure Settings and HttpClient
+
+First, set up configuration management to read settings from environment variables, user secrets, or configuration files:
+
+```csharp
+using Microsoft.Extensions.Configuration;
+
+namespace InsMonitor.Test.System.Helpers;
+
+internal class Settings
+{
+    private static readonly HttpClient _httpClient = new();
+    private static readonly Lazy<IConfiguration> Configuration = new(() =>
+    {
+        return new ConfigurationBuilder()
+            .AddEnvironmentVariables()
+#if DEBUG
+            .AddUserSecrets<Settings>()
+            .AddJsonFile("local.settings.json")
+            //.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(@"{
+            //    ""ENV_AppUrl"": ""https://appurl.com""
+            //}")))
+#endif
+            .Build();
+    });
+
+    static Settings()
+    {
+        _httpClient.BaseAddress = new Uri(AppUrl.TrimEnd('/'));
+        _httpClient.Timeout = TimeSpan.FromSeconds(30);
+
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+        _httpClient.DefaultRequestHeaders.Add("User-Agent", "MyApp-TestClient");
+    }
+
+    public static string AppUrl = Configuration.Value["ENV_AppUrl"] ?? throw new ArgumentNullException($"No value for ${nameof(AppUrl)}");
+    public static string Scope = Configuration.Value["ENV_Scope"] ?? throw new ArgumentNullException($"No value for ${nameof(Scope)}");
+    public static string FirstTenantId = Configuration.Value["ENV_FirstTenantId"] ?? throw new ArgumentNullException($"No value for ${nameof(FirstTenantId)}");
+    public static string SecondTenantId = Configuration.Value["ENV_SecondTenantId"] ?? throw new ArgumentNullException($"No value for ${nameof(SecondTenantId)}");
+    public static string ClientId = Configuration.Value["ENV_ClientId"] ?? throw new ArgumentNullException($"No value for ${nameof(ClientId)}");
+    public static HttpClient HttpClient => _httpClient;
+}
+```
+
+### Retrieve Federated Identity Token
+
+Create an extension method to authenticate HTTP requests using `DefaultAzureCredential` with cross-tenant support:
+
+```csharp
+using Azure.Core;
+using Azure.Identity;
+using System.Net.Http.Headers;
+
+namespace InsMonitor.Test.System.Helpers;
+
+internal static class HttpRequestMessageExtensions
+{
+    private static readonly DefaultAzureCredential _defaultAzureCredential = new(new DefaultAzureCredentialOptions
+    {
+        TenantId = Settings.SecondTenantId,
+        AdditionallyAllowedTenants = { Settings.FirstTenantId }
+    });
+    private static readonly TokenRequestContext _tokenRequestContext = new([Settings.Scope]);
+
+    public static async Task<HttpRequestMessage> WithFederatedIdentityToken(this HttpRequestMessage request, CancellationToken cancellationToken = default)
+    {
+        var accessToken = await _defaultAzureCredential.GetTokenAsync(_tokenRequestContext, cancellationToken);
+
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken.Token);
+
+        return request;
+    }
+}
+```
