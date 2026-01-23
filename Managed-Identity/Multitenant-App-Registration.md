@@ -2,6 +2,12 @@
 
 This guide walks through the process of converting an Azure App Registration to multitenant and provisioning it in a destination tenant.
 
+## Document Information
+
+- **Last Updated:** January 23, 2026
+- **Azure CLI Version:** 2.80.0
+- **PowerShell Version:** 7.5.4
+
 ## Overview
 
 To enable an app registration across multiple tenants, you need to:
@@ -16,9 +22,11 @@ To enable an app registration across multiple tenants, you need to:
 - App Owner or Application Administrator role in the source tenant
 - Cloud Application Administrator or Application Administrator role in the destination tenant
 
-## Step 1: Connect to Source Tenant
+## Configuration Steps
 
-### If the tenant has a subscription
+### Step 1: Connect to Source Tenant
+
+#### If the tenant has a subscription
 
 List and select the appropriate subscription:
 
@@ -30,14 +38,14 @@ az account list `
 # Find specific subscription by name
 az account list `
     --all `
-    --query "[?contains(name, 'subscription_name')].{Id:id, Name:name}"
+    --query "[?contains(name, '<SUBSCRIPTION_NAME>')].{Id:id, Name:name}"
 
 # Set active subscription
 az account set `
-    -s <subscription_id>
+    -s <SUBSCRIPTION_ID>
 ```
 
-### If the tenant has no subscription
+#### If the tenant has no subscription
 
 Connect directly to the tenant:
 
@@ -47,28 +55,28 @@ az account tenant list
 
 # Login to specific tenant without subscription
 az login `
-    --tenant <tenant_id> `
+    --tenant <TENANT_ID> `
     --allow-no-subscriptions
 ```
 
-## Step 2: Configure Multitenant Support
+### Step 2: Configure Multitenant Support
 
-### Find your app registration
+#### Find your app registration
 
 ```powershell
 # Find app by display name and get its ID
-az ad app list `
+$clientId = az ad app list `
     --filter "displayName eq 'YourAppName'" `
-    --query '[0].id' `
+    --query '[0].appId' `
     -o tsv
 ```
 
-### Update the sign-in audience
+#### Update the sign-in audience
 
 ```powershell
 # Configure app registration for multitenant access
 az ad app update `
-    --id <app_registration_client_id> `
+    --id $clientId `
     --sign-in-audience AzureADMultipleOrgs
 ```
 
@@ -79,18 +87,18 @@ az ad app update `
 - `AzureADandPersonalMicrosoftAccount` - Multitenant + personal Microsoft accounts
 - `PersonalMicrosoftAccount` - Personal Microsoft accounts only
 
-## Step 3: Connect to Destination Tenant
+### Step 3: Connect to Destination Tenant
 
 Use the same authentication steps from [Step 1](#step-1-connect-to-source-tenant) to connect to the destination tenant where you want to provision the app.
 
-## Step 4: Create Service Principal in Destination Tenant
+### Step 4: Create Service Principal in Destination Tenant
 
 Once connected to the destination tenant, create the service principal:
 
 ```powershell
 # Create service principal using the app registration's client ID
 az ad sp create `
-    --id <app_registration_client_id>
+    --id $clientId
 ```
 
 This provisions the application in the destination tenant and allows you to assign it permissions and roles.
@@ -102,6 +110,6 @@ To verify the service principal was created successfully:
 ```powershell
 # List service principals by app ID
 az ad sp list `
-    --filter "appId eq '<app_registration_client_id>'" `
+    --filter "appId eq '${clientId}'" `
     --query '[].{DisplayName:displayName, ObjectId:id}'
 ```

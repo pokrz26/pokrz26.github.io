@@ -2,6 +2,13 @@
 
 This guide explains how to register a service principal as a user with an assigned role in another app registration within the same Azure AD tenant.
 
+## Document Information
+
+- **Last Updated:** January 23, 2026
+- **Azure CLI Version:** 2.80.0
+- **PowerShell Version:** 7.5.4
+- **.NET SDK Version:** 8.0 (for C# examples)
+
 ## Prerequisites
 
 - Both service principals must be registered in the same Azure AD tenant
@@ -9,51 +16,53 @@ This guide explains how to register a service principal as a user with an assign
 - Azure CLI installed and authenticated
 - For cross-tenant scenarios, configure the app as multitenant first
 
-## Step 1: Retrieve the Source Service Principal Object ID
+## Configuration steps
+
+### Step 1: Retrieve the Source Service Principal Object ID
 
 Get the object ID of the service principal that will be granted access to the target application.
 
 ```powershell
-az ad sp list `
+$sourceAppObjectId = az ad sp list `
     --filter "displayName eq '<SOURCE_APP_NAME>' and servicePrincipalType eq 'Application'" `
     --query '[0].id' `
     --output tsv
 ```
 
-## Step 2: Retrieve the Target Service Principal Object ID
+### Step 2: Retrieve the Target Service Principal Object ID
 
 Get the object ID of the target application where the role assignment will be created.
 
 ```powershell
-az ad sp list `
+$targetAppObjectId = az ad sp list `
     --filter "displayName eq '<TARGET_APP_NAME>' and servicePrincipalType eq 'Application'" `
     --query '[0].id' `
     --output tsv
 ```
 
-## Step 3: List Available App Roles
+### Step 3: List Available App Roles
 
 Retrieve the available app roles from the target application to identify the appropriate role ID.
 
 ```powershell
 az ad sp show `
-    --id <TARGET_SP_OBJECT_ID> `
+    --id $targetAppObjectId `
     --query 'appRoles' `
     | ConvertFrom-Json `
     | Select-Object displayName, value, id `
     | Format-Table
 ```
 
-## Step 4: Create the App Role Assignment
+### Step 4: Create the App Role Assignment
 
 Assign the selected role to the source service principal in the context of the target application.
 
 ```powershell
 az rest `
     --method POST `
-    --url "https://graph.microsoft.com/v1.0/servicePrincipals/<SOURCE_SP_OBJECT_ID>/appRoleAssignments" `
+    --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments" `
     --headers "Content-Type=application/json" `
-    --body '{\"principalId\": \"<SOURCE_SP_OBJECT_ID>\", \"resourceId\": \"<TARGET_SP_OBJECT_ID>\", \"appRoleId\": \"<ROLE_ID>\"}'
+    --body '{\"principalId\": \"'${sourceAppObjectId}'\", \"resourceId\": \"'${targetAppObjectId}'\", \"appRoleId\": \"<ROLE_ID>\"}'
 ```
 
 ## Verification
@@ -63,7 +72,7 @@ To verify the role assignment was successful:
 ```powershell
 az rest `
     --method GET `
-    --url "https://graph.microsoft.com/v1.0/servicePrincipals/<SOURCE_SP_OBJECT_ID>/appRoleAssignments"
+    --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments"
 ```
 
 ## Example Usage in C\#
@@ -77,7 +86,7 @@ First, set up configuration management to read settings from environment variabl
 ```csharp
 using Microsoft.Extensions.Configuration;
 
-namespace InsMonitor.Test.System.Helpers;
+namespace YourApp.Test.System.Helpers;
 
 internal class Settings
 {
@@ -124,7 +133,7 @@ using Azure.Core;
 using Azure.Identity;
 using System.Net.Http.Headers;
 
-namespace InsMonitor.Test.System.Helpers;
+namespace YourApp.Test.System.Helpers;
 
 internal static class HttpRequestMessageExtensions
 {
