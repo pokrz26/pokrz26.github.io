@@ -12,3 +12,8 @@ navigation:
     link: /
   - name: Test
     link: /Test
+  - name: Managed Identity
+    link: /Managed-Identity
+    sublist:
+      - name: Multitenant App Registration
+        link: /Managed-Identity/Multitenant-App-Registration
