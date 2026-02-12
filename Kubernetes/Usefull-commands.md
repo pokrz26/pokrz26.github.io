@@ -1,5 +1,14 @@
 # Useful Kubernetes commands
 
+## Document Information
+
+- **Last Updated:** February 12, 2026
+- **Azure CLI Version:** 2.80.0
+- **PowerShell Version:** 7.5.4
+- **Client Version:** v1.31.2
+- **Kustomize Version:** v5.4.2
+- **Server Version:** v1.33.6
+
 ## Login to Azure AKS
 
 Use Azure CLI to download AKS cluster credentials and configure kubelogin.
