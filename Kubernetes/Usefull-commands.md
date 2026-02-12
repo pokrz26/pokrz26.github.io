@@ -57,7 +57,7 @@ kubectl config unset users.user-name-from-config-view
 ## Get resources with selected types
 
 ```powershell
-kubectl get CronJobs,Jobs,Pods -n repo-scanner
+kubectl get CronJobs,Jobs,Pods -n namespace-name
 ```
 
 ## Manage jobs
@@ -65,17 +65,18 @@ kubectl get CronJobs,Jobs,Pods -n repo-scanner
 ### Create Job from CronJob
 
 ```powershell
-kubectl create job --from=cronjob/repo-scanner-reports-processor-cron-job repo-scanner-reports-processor-cron-job-test -n repo-scanner
+kubectl create job --from=cronjob/name-of-cron-job name-of-cron-job-test -n namespace-name
 ```
 
 ### Get live logs from Pod
 
 ```powershell
-kubectl logs repo-scanner-reports-processor-cron-job-test-5sc5b -n repo-scanner -f
+kubectl get pods -n namespace-name
+kubectl logs pod-name-from-previous-step -n namespace-name -f
 ```
 
 ### Delete Job
 
 ```powershell
-kubectl delete job repo-scanner-reports-processor-cron-job-test -n repo-scanner
+kubectl delete job name-of-cron-job-test -n namespace-name
 ```
