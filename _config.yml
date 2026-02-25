@@ -10,8 +10,11 @@ layout: default
 navigation:
   - name: Home
     link: /
-  - name: Test
-    link: /Test
+  - name: DotNet
+    link: /DotNet
+    sublist:
+      - name: User Secrets
+        link: /DotNet/User-secrets
   - name: Managed Identity
     link: /Managed-Identity
     sublist:
