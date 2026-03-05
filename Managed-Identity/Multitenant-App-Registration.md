@@ -38,11 +38,11 @@ az account list `
 # Find specific subscription by name
 az account list `
     --all `
-    --query "[?contains(name, '<SUBSCRIPTION_NAME>')].{Id:id, Name:name}"
+    --query "[?contains(name, '<subscription-name>')].{Id:id, Name:name}"
 
 # Set active subscription
 az account set `
-    -s <SUBSCRIPTION_ID>
+    -s <subscription-id>
 ```
 
 #### If the tenant has no subscription
@@ -55,7 +55,7 @@ az account tenant list
 
 # Login to specific tenant without subscription
 az login `
-    --tenant <TENANT_ID> `
+    --tenant <tenant-id> `
     --allow-no-subscriptions
 ```
 

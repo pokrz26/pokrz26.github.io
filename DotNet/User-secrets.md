@@ -11,13 +11,13 @@
 ### Windows
 
 ```powershell
-%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json
+%APPDATA%\Microsoft\UserSecrets\<user-secrets-id>\secrets.json
 ```
 
 ### Linux/MacOS
 
 ```bash
-~/.microsoft/usersecrets/<user_secrets_id>/secrets.json
+~/.microsoft/usersecrets/<user-secrets-id>/secrets.json
 ```
 
 ## DotNet CLI commands
