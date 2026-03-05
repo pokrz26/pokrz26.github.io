@@ -21,9 +21,16 @@ navigation:
       - name: Multitenant App Registration
         link: /Managed-Identity/Multitenant-App-Registration
       - name: Assign Service Principal as user
-        link: /Managed-Identity/Assign-Service-Principal-As-User
+        link: /Managed-Identity/Assign-Service-Principal-As-
+      - name: Get Access Token for App Registration
+        link: /Managed-Identity/Get-token-for-app-registration
   - name: Kubernetes
     link: /Kubernetes
     sublist:
       - name: Usefull commands
         link: /Kubernetes/Usefull-commands
+  - name: Easy Auth
+    link: /Easy-Auth
+    sublist:
+      - name: Get Access Token for App Registration
+        link: /Easy-Auth/Get-token-for-app-registration

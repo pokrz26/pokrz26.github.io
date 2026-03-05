@@ -24,7 +24,7 @@ Get the object ID of the service principal that will be granted access to the ta
 
 ```powershell
 $sourceAppObjectId = az ad sp list `
-    --filter "displayName eq '<SOURCE_APP_NAME>' and servicePrincipalType eq 'Application'" `
+    --filter "displayName eq '<source-app-name>' and servicePrincipalType eq 'Application'" `
     --query '[0].id' `
     --output tsv
 ```
@@ -35,7 +35,7 @@ Get the object ID of the target application where the role assignment will be cr
 
 ```powershell
 $targetAppObjectId = az ad sp list `
-    --filter "displayName eq '<TARGET_APP_NAME>' and servicePrincipalType eq 'Application'" `
+    --filter "displayName eq '<target-app-name>' and servicePrincipalType eq 'Application'" `
     --query '[0].id' `
     --output tsv
 ```
@@ -62,7 +62,7 @@ az rest `
     --method POST `
     --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments" `
     --headers "Content-Type=application/json" `
-    --body '{\"principalId\": \"'${sourceAppObjectId}'\", \"resourceId\": \"'${targetAppObjectId}'\", \"appRoleId\": \"<ROLE_ID>\"}'
+    --body '{\"principalId\": \"'${sourceAppObjectId}'\", \"resourceId\": \"'${targetAppObjectId}'\", \"appRoleId\": \"<role-id>\"}'
 ```
 
 ## Verification
