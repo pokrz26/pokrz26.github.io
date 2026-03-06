@@ -39,3 +39,8 @@ navigation:
     sublist:
       - name: Usefull commands and informations
         link: /Azure-DevOps/Usefull-commands-and-informations
+  - name: Log-Analytics
+    link: /Log-Analytics
+    sublist:
+      - name: Usefull queries
+        link: /Log-Analytics/Usefull-queries
