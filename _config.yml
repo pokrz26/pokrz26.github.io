@@ -34,3 +34,8 @@ navigation:
     sublist:
       - name: Get Access Token for App Registration
         link: /Easy-Auth/Configure-service-principal
+  - name: Azure DevOps
+    link: /Azure-DevOps
+    sublist:
+      - name: Usefull commands and informations
+        link: /Azure-DevOps/Usefull-commands-and-informations
