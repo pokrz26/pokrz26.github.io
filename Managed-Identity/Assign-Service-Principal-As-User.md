@@ -62,7 +62,7 @@ az rest `
     --method POST `
     --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments" `
     --headers "Content-Type=application/json" `
-    --body '{\"principalId\": \"'${sourceAppObjectId}'\", \"resourceId\": \"'${targetAppObjectId}'\", \"appRoleId\": \"<role-id>\"}'
+    --body "{\"principalId\": \"${sourceAppObjectId}\", \"resourceId\": \"${targetAppObjectId}\", \"appRoleId\": \"<role-id>\"}"
 ```
 
 ## Verification
