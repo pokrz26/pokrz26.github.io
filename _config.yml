@@ -15,6 +15,8 @@ navigation:
     sublist:
       - name: User Secrets
         link: /DotNet/User-secrets
+      - name: Dotnet tools
+        link: /DotNet/Dotnet-tools
   - name: Managed Identity
     link: /Managed-Identity
     sublist:
@@ -44,3 +46,8 @@ navigation:
     sublist:
       - name: Usefull queries
         link: /Log-Analytics/Usefull-queries
+  - name: Debug
+    link: /Debug
+    sublist:
+      - name: Usefull-tools
+        link: /Debug/Usefull-tools

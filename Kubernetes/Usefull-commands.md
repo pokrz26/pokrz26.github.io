@@ -80,3 +80,10 @@ kubectl logs pod-name-from-previous-step -n namespace-name -f
 ```powershell
 kubectl delete job name-of-cron-job-test -n namespace-name
 ```
+
+## Check KEDA scaler logs
+
+```powershell
+kubectl get pods -n kube-system
+kubectl logs keda-operator-<pod-name-from-previous-step> -n kube-system -f 
+```
