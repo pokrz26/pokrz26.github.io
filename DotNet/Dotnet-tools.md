@@ -11,13 +11,13 @@
 ### Install a tool globally
 
 ```powershell
-dotnet tool install --global dotnet-ef --version 10.0.4
+dotnet tool install --global dotnet-ef --version <tool-version>
 ```
 
 ### Install a tool locally
 
 ```powershell
-dotnet tool update dotnet-ef --version 10.0.4
+dotnet tool update dotnet-ef --version <tool-version>
 ```
 
 And this creates a manifest file in the current directory if it doesn't exist.
@@ -28,7 +28,7 @@ And this creates a manifest file in the current directory if it doesn't exist.
   "isRoot": true,
   "tools": {
     "dotnet-ef": {
-      "version": "10.0.4",
+      "version": "<tool-version>",
       "commands": [
         "dotnet-ef"
       ],
@@ -43,11 +43,11 @@ And this creates a manifest file in the current directory if it doesn't exist.
 ### Update a tool globally
 
 ```powershell
-dotnet tool update --global dotnet-ef --version 10.0.4
+dotnet tool update --global dotnet-ef --version <tool-version>
 ```
 
 ### Update a tool locally
 
 ```powershell
-dotnet tool update dotnet-ef --version 10.0.4
+dotnet tool update dotnet-ef --version <tool-version>
 ```
