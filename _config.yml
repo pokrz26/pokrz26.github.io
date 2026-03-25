@@ -51,3 +51,8 @@ navigation:
     sublist:
       - name: Usefull-tools
         link: /Debug/Usefull-tools
+  - name: Linux
+    link: /Linux
+    sublist:
+      - name: Journalctl usefull commands
+        link: /Linux/Journalctl-usefull-commands
