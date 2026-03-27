@@ -26,6 +26,8 @@ navigation:
         link: /Managed-Identity/Assign-Service-Principal-As-User
       - name: Get Access Token for App Registration
         link: /Managed-Identity/Get-token-for-app-registration
+      - name: Authorize using certificate
+        link: /Managed-Identity/Authorize-using-certificate
   - name: Kubernetes
     link: /Kubernetes
     sublist:
