@@ -2,7 +2,7 @@
 title: Configure Service Principal for Easy Auth
 date: 2026-04-23 14:04:00 +0200
 categories: [EasyAuth]
-tags: [easyauth, azure, service-principal, authentication]
+tags: [easyauth, azure, authentication]
 description: This guide provides instructions on how to configure a service principal for Easy Auth. A service principal allows your application to authenticate and access resources securely.
 ---
 

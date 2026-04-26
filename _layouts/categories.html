@@ -1,0 +1,240 @@
+---
+layout: page
+# All the Categories of posts
+---
+
+{% include lang.html %} {% assign sort_categories = site.categories | sort %}
+
+<!-- Initialize an empty object to hold the filtered categories -->
+{% assign filtered_categories = '' %} {% assign filtered_categories = '{' %}
+
+<!-- Iterate through each category in sort_categories -->
+{% for category in sort_categories %} {% assign category_key = category[0] %} {%
+assign filtered_posts = '' %} {% assign filtered_posts = '[' %}
+
+<!-- Iterate through each post in the current category -->
+{% for post in category[1] %} {% assign filtered_post = '{' %} {% assign
+filtered_post = filtered_post | append: '"url": "' | append: post.url | append:
+'", "title": "' | append: post.title | append: '", "categories": ' | append:
+post.categories | append: '}' %} {% if forloop.last %} {% assign filtered_posts
+= filtered_posts | append: filtered_post %} {% else %} {% assign filtered_posts
+= filtered_posts | append: filtered_post | append: ', ' %} {% endif %} {% endfor
+%} {% assign filtered_posts = filtered_posts | append: ']' %} {% if forloop.last
+%} {% assign filtered_categories = filtered_categories | append: '"' | append:
+category_key | append: '": ' | append: filtered_posts %} {% else %} {% assign
+filtered_categories = filtered_categories | append: '"' | append: category_key |
+append: '": ' | append: filtered_posts | append: ', ' %} {% endif %} {% endfor
+%} {% assign filtered_categories = filtered_categories | append: '}' %}
+
+<style>
+  .post {
+    padding: 8px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--categories-border);
+    border-radius: 0;
+  }
+  .list-group {
+    padding: 8px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--categories-border);
+    border-radius: none;
+  }
+  .deepest {
+    border-left: 0px;
+    border: 0cm;
+  }
+  .border-transparent:not(:hover) {
+    border-bottom: 1px solid transparent !important;
+  }
+</style>
+<div id="categoriesContainer"></div>
+<script>
+
+  function processCategories(jsonData) {
+    const categoriesMap = new Map();
+    const processedPosts = new Set();
+
+    function getCategory(name, parent = null) {
+      if (!categoriesMap.has(name)) {
+        categoriesMap.set(name, {
+          name,
+          postCount: 0,
+          posts: [],
+          children: [],
+          parent: parent ? parent.name : null,
+        });
+      }
+      return categoriesMap.get(name);
+    }
+
+    Object.entries(jsonData).forEach(([categoryName, posts]) => {
+      posts.forEach((post) => {
+        if (processedPosts.has(post.url)) return;
+        processedPosts.add(post.url);
+
+        let parentCategory = null;
+        post.categories.forEach((catName) => {
+          const category = getCategory(catName, parentCategory);
+          if (
+            parentCategory &&
+            !parentCategory.children.some((child) => child.name === catName)
+          ) {
+            parentCategory.children.push(category);
+          }
+          parentCategory = category;
+        });
+
+        if (parentCategory) {
+          parentCategory.postCount++;
+          parentCategory.posts.push({
+            title: post.title,
+            url: post.url,
+          });
+        }
+      });
+    });
+
+    return Array.from(categoriesMap.values()).filter((cat) => !cat.parent);
+  }
+
+
+
+  function updateCategoryStats(categories) {
+    function calculatePostsAndChildrenCount(category) {
+      let postCount = category.postCount;
+      let childrenCount = category.children.length;
+
+      category.children.forEach((child) => {
+        const childStats = calculatePostsAndChildrenCount(child);
+        postCount += childStats.totalPostCount;
+        childrenCount += childStats.totalChildrenCount;
+      });
+
+      category.totalPostCount = postCount;
+      category.totalChildrenCount = childrenCount;
+
+      return { totalPostCount: postCount, totalChildrenCount: childrenCount };
+    }
+
+    const updatedCategories = categories.map((category) => {
+      calculatePostsAndChildrenCount(category);
+      return category;
+    });
+
+    return updatedCategories;
+  }
+
+  function renderCategories(categories) {
+    let html = '<div class="categories">';
+
+    categories.forEach((category, index) => {
+      html += renderCategory(category, index, 0);
+    });
+
+    html += "</div>";
+    return html;
+  }
+
+  function renderCategory(category, index, level) {
+    const hasChildren = category.children.length > 0;
+    const headId = `h-${index}`;
+    const contentId = `c-${index}`;
+
+    let html = `
+    <div class="${level == 0 ? "card categories category-paren" : "category-content"}" style="margin-left: ${20 + level * 3}px;">
+      <div id="${headId}" class="${hasChildren && level == 0 ? "card-header d-flex justify-content-between hide-border-bottom" : "list-group "}" style="${hasChildren && level == 0 ? "" : "border-radius: unset; flex-direction: row;justify-content: space-between;padding: 10px; padding-right: 13px;"}">
+        <div data-folder-icon="${index}" class="d-flex flex-row justify-content-start align-items-center">
+          <i class="category-icon ${hasChildren || category.totalPostCount > 0 ? "far fa-folder-open fa-fw" : "far fa-folder fa-fw"}"></i>
+          <a href="/categories/${encodeURIComponent(category.name.replace(/\s+/g, '-').toLowerCase())}/" class="category-name border-transparent mx-2">${category.name}</a>
+        </div>
+        <span class="text-muted small font-weight-light">${category.totalChildrenCount} categories , ${category.totalPostCount} posts</span>
+        ${hasChildren || category.totalPostCount > 0 ? `
+          <div class="category-trigger hide-border-bottom" data-bs-toggle="collapse" data-index="${index}" data-bs-target="#${contentId}">
+            <i class="fas fa-fw fa-angle-down"></i>
+          </div>
+        ` : ""}
+      </div>
+      ${renderPosts(category.posts, level + 1, index)}
+      ${hasChildren ? `
+        <div id="${contentId}" class="category-content collapse show">
+          ${category.children.map((child, childIndex) => renderCategory(child, `${index}-${childIndex}`, level + 1)).join('')}
+        </div>
+      ` : ""}
+    </div>
+    `;
+    return html;
+  }
+
+  function renderPosts(posts, level, index) {
+    if (posts.length === 0) return "";
+
+    let html = `<div id="c-${index}" class="posts-${level - 1} category-content collapse show" style="margin-left: ${20 + level * 3}px;">`;
+    posts.forEach((post) => {
+      html += `
+      <div class="post" style="align-items: center; display: flex;">
+        <i class="post-icon fa-regular fa-file-lines" style="font-size:16px"></i>
+        <a href="${post.url}" class="border-transparent post-title mx-2">${post.title}</a>
+      </div>
+      `;
+    });
+    html += "</div>";
+    return html;
+  }
+
+  function setupTriggerIcons() {
+    document.querySelectorAll(".category-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", function () {
+        const index = this.getAttribute("data-index");
+        const arrowIcon = this.querySelector("i");
+        const folderIcon = document.querySelector(`[data-folder-icon="${index}"] i`);
+        arrowIcon.classList.toggle("rotate");
+        if (folderIcon.classList.contains("fa-folder-open")) {
+          folderIcon.classList.replace("fa-folder-open", "fa-folder");
+        } else {
+          folderIcon.classList.replace("fa-folder", "fa-folder-open");
+        }
+      });
+    });
+  }
+
+  function getDeepestDivs() {
+    const outerDivs = document.querySelectorAll(".category-paren");
+    const deepestDivs = [];
+
+    outerDivs.forEach((outerDiv) => {
+      let currentLevel = [outerDiv];
+
+      while (currentLevel.length > 0) {
+        const nextLevel = [];
+        currentLevel.forEach((div) => {
+          const children = Array.from(div.children).filter((child) => child.tagName === "DIV");
+          if (children.length === 0) {
+            deepestDivs.push(div);
+          } else {
+            nextLevel.push(...children);
+          }
+        });
+        currentLevel = nextLevel;
+      }
+    });
+
+    return deepestDivs;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+      var obj = {{ filtered_categories | strip_newlines }};
+      const categoriesContainer = document.getElementById("categoriesContainer");
+      const hierarchicalCategories = processCategories(obj);
+      console.log('Hierarchical Categories:', hierarchicalCategories);
+      categoriesContainer.innerHTML = renderCategories(updateCategoryStats(hierarchicalCategories));
+      setupTriggerIcons();
+      const deepestDivs = getDeepestDivs();
+
+      deepestDivs.forEach((div) => {
+      div.classList.add("deepest");
+      });
+
+  })
+</script>

@@ -1,8 +1,8 @@
 ---
 title: User Secrets
 date: 2026-04-23 14:18:00 +0200
-categories: [DotNet]
-tags: [dotnet]
+categories: [Local Environment, Tools, DotNet]
+tags: [local environemnt,  tools, dotnet]
 description: A guide on how to manage user secrets in .NET applications.
 ---
 
