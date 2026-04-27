@@ -32,6 +32,12 @@ $sourceAppObjectId = az ad sp list `
     --output tsv
 ```
 
+If you want to assign role to system assigned managed identity, use the following command to get the object ID:
+
+```powershell
+az ad sp list --display-name '<source-app-name>' --query '[0].appId'
+```
+
 ### Step 2: Retrieve the Target Service Principal Object ID
 
 Get the object ID of the target application where the role assignment will be created.
