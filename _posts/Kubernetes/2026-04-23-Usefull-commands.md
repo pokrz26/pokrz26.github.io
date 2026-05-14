@@ -95,8 +95,22 @@ kubectl logs <keda-operator-pod-name> -n <keda-namespace> -f
 
 ## Check cert-manager resources
 
+Use these commands to troubleshoot certificate request failures in cert-manager.
+
+### Get certificate information
+
 ```powershell
 kubectl get certificate -n <namespace-name>
+```
+
+### Get certificate request information
+
+```powershell
 kubectl get certificaterequest -n <namespace-name>
+```
+
+### Watch certificate challenges
+
+```powershell
 kubectl get challenges -n <namespace-name> -w
 ```
