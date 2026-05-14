@@ -19,7 +19,7 @@ description: A collection of useful Kubernetes commands for managing AKS cluster
 Use Azure CLI to download AKS cluster credentials and configure kubelogin.
 
 ```powershell
-az aks get-credentials --resource-group rg-name --name aks-name
+az aks get-credentials --resource-group <resource-group-name> --name <aks-cluster-name>
 kubelogin convert-kubeconfig -l azurecli
 ```
 
@@ -48,21 +48,21 @@ kubectl config view
 ### Change context
 
 ```powershell
-kubectl config use-context context-name
+kubectl config use-context <context-name>
 ```
 
 ### Fully delete context from kubeconfig
 
 ```powershell
-kubectl config delete-cluster cluster-name-from-config-view
-kubectl config delete-context context-name-from-config-view
-kubectl config unset users.user-name-from-config-view
+kubectl config delete-cluster <cluster-name-from-config-view>
+kubectl config delete-context <context-name-from-config-view>
+kubectl config unset users.<user-name-from-config-view>
 ```
 
 ## Get resources with selected types
 
 ```powershell
-kubectl get CronJobs,Jobs,Pods -n namespace-name
+kubectl get CronJobs,Jobs,Pods -n <namespace-name>
 ```
 
 ## Manage jobs
@@ -70,25 +70,47 @@ kubectl get CronJobs,Jobs,Pods -n namespace-name
 ### Create Job from CronJob
 
 ```powershell
-kubectl create job --from=cronjob/name-of-cron-job name-of-cron-job-test -n namespace-name
+kubectl create job --from=cronjob/<cron-job-name> <job-name> -n <namespace-name>
 ```
 
 ### Get live logs from Pod
 
 ```powershell
-kubectl get pods -n namespace-name
-kubectl logs pod-name-from-previous-step -n namespace-name -f
+kubectl get pods -n <namespace-name>
+kubectl logs <pod-name-from-previous-step> -n <namespace-name> -f
 ```
 
 ### Delete Job
 
 ```powershell
-kubectl delete job name-of-cron-job-test -n namespace-name
+kubectl delete job <job-name> -n <namespace-name>
 ```
 
 ## Check KEDA scaler logs
 
 ```powershell
-kubectl get pods -n kube-system
-kubectl logs keda-operator-<pod-name-from-previous-step> -n kube-system -f 
+kubectl get pods -n <keda-namespace>
+kubectl logs <keda-operator-pod-name> -n <keda-namespace> -f
+```
+
+## Check cert-manager resources
+
+Use these commands to troubleshoot certificate request failures in cert-manager.
+
+### Get certificate information
+
+```powershell
+kubectl get certificate -n <namespace-name>
+```
+
+### Get certificate request information
+
+```powershell
+kubectl get certificaterequest -n <namespace-name>
+```
+
+### Watch certificate challenges
+
+```powershell
+kubectl get challenges -n <namespace-name> -w
 ```
