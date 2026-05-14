@@ -92,3 +92,9 @@ kubectl delete job name-of-cron-job-test -n namespace-name
 kubectl get pods -n kube-system
 kubectl logs keda-operator-<pod-name-from-previous-step> -n kube-system -f 
 ```
+
+kubernetes - certmanager
+
+kubectl get certificate -n defectdojo-prod
+kubectl get certificaterequest -n defectdojo-prod
+kubectl get challenges -n defectdojo-prod -w
