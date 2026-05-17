@@ -8,6 +8,8 @@ description: This guide explains how to create a Kali Linux virtual machine in A
 
 ## Document Information
 
+- **Azure CLI Version:** 2.80.0
+- **PowerShell Version:** 7.6.1
 - **Platform:** Microsoft Azure
 - **Image:** `kali-linux:kali:kali-2026-1:latest`
 - **VM Size:** `Standard_D8as_v6`
