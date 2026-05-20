@@ -51,7 +51,7 @@ $targetAppObjectId = az ad sp list `
 
 ### Step 3: List Available App Roles
 
-Retrieve the available app roles from the target application to identify the appropriate role ID.
+Retrieve the available app roles from the target application to identify the appropriate role ID. Run the following command to list all app roles defined in the target application and copy the ID of the role you want to assign.
 
 ```powershell
 az ad sp show `
@@ -60,6 +60,17 @@ az ad sp show `
     | ConvertFrom-Json `
     | Select-Object displayName, value, id `
     | Format-Table
+```
+
+Or run the below command to filter the app role by display name and get the corresponding role ID.
+
+```powershell
+$roleId = (az ad sp show `
+    --id $targetAppObjectId `
+    --query 'appRoles' `
+    | ConvertFrom-Json `
+    | Select-Object displayName, value, id `
+    | Where-Object { $_.displayName -eq "<role-display-name>" })[0].id
 ```
 
 ### Step 4: Create the App Role Assignment
@@ -71,7 +82,7 @@ az rest `
     --method POST `
     --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments" `
     --headers "Content-Type=application/json" `
-    --body "{\"principalId\": \"${sourceAppObjectId}\", \"resourceId\": \"${targetAppObjectId}\", \"appRoleId\": \"<role-id>\"}"
+    --body "{'principalId': '${sourceAppObjectId}', 'resourceId': '${targetAppObjectId}', 'appRoleId': '${roleId}'}"
 ```
 
 ## Verification
