@@ -1,6 +1,6 @@
 ---
 title: Useful Kubernetes Commands
-date: 2026-04-23 14:04:00 +0200
+date: 2026-07-14 00:00:00 +0200
 categories: [Kubernetes]
 tags: [kubernetes, aks, kubectl, keda]
 description: A collection of useful Kubernetes commands for managing AKS clusters and resources.
@@ -59,6 +59,14 @@ kubectl config delete-context <context-name-from-config-view>
 kubectl config unset users.<user-name-from-config-view>
 ```
 
+### Remove cached kubelogin tokens
+
+Use this when you need to clear cached Azure authentication tokens and force a fresh login flow.
+
+```powershell
+kubelogin remove-tokens
+```
+
 ## Get resources with selected types
 
 ```powershell
@@ -84,6 +92,50 @@ kubectl logs <pod-name-from-previous-step> -n <namespace-name> -f
 
 ```powershell
 kubectl delete job <job-name> -n <namespace-name>
+```
+
+### Delete Jobs matching a name pattern
+
+Use this to remove multiple jobs in the same namespace when they share a common prefix.
+
+```powershell
+kubectl get jobs -n <namespace-name> -o name | Where-Object { $_ -match "<job-name-prefix>" } | ForEach-Object { kubectl delete $_ -n <namespace-name> }
+```
+
+### Force delete a stuck Pod
+
+Use this only when a pod is stuck in `Terminating` and a normal delete does not complete.
+
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
+> `--force --grace-period=0` skips graceful shutdown. The container process may not finish cleanup, in-flight work can be lost, and attached systems may observe abrupt termination.
+{: .prompt-warning }
+<!-- markdownlint-restore -->
+
+```powershell
+kubectl delete pod <pod-name> -n <namespace-name> --force --grace-period=0
+```
+
+### Force delete Pods matching a name pattern
+
+Use this to remove multiple stuck pods in the same namespace when they share a common prefix.
+
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
+> Apply the same caution as for single-pod force deletion. Prefer a normal `kubectl delete pod` first and use force deletion only for pods that do not terminate cleanly.
+{: .prompt-warning }
+<!-- markdownlint-restore -->
+
+```powershell
+kubectl get pods -n <namespace-name> -o name | Where-Object { $_ -match "<pod-name-prefix>" } | ForEach-Object { kubectl delete $_ -n <namespace-name> --force --grace-period=0 }
+```
+
+### Inspect processes running inside a Pod
+
+Use this to inspect the process tree, parent process relationships, and wait channels inside a running container.
+
+```powershell
+kubectl exec -n <namespace-name> <pod-name> -- ps -eo pid,ppid,pgid,stat,wchan:32,args
 ```
 
 ## Check KEDA scaler logs
