@@ -58,11 +58,11 @@ Use this pattern to verify whether a resource name is available in the selected 
 <!-- markdownlint-restore -->
 
 ```powershell
-az rest --method post --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/<resource-provider>/<check-name-path>?api-version=<api-version>' --headers 'Content-Type=application/json' --body '{"name":"<resource-name>","type":"<resource-type>"}'
+az rest --method post --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/<resource-provider>/<check-name-path>?api-version=<api-version>' --headers 'Content-Type=application/json' --body "{'name':'<resource-name>','type':'<resource-type>'}"
 ```
 
 Example for Key Vault:
 
 ```powershell
-az rest --method post --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/Microsoft.KeyVault/checkNameAvailability?api-version=2019-09-01' --headers 'Content-Type=application/json' --body '{"name":"<key-vault-name>","type":"Microsoft.KeyVault/vaults"}'
+az rest --method post --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/Microsoft.KeyVault/checkNameAvailability?api-version=2019-09-01' --headers 'Content-Type=application/json' --body "{'name':'<key-vault-name>','type':'Microsoft.KeyVault/vaults'}"
 ```
