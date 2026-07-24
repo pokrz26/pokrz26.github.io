@@ -167,12 +167,12 @@ az containerapp env certificate upload `
 
 ## Benefits
 
-- Access to exactly one certificate
-- No access to other certificates
-- No access to other secrets
-- No Key Vault-wide permissions
-- Least-privilege RBAC model
-- Works with Azure Container Apps certificate import
+This approach keeps the permission scope narrow while still allowing certificate import to work correctly.
+
+- The Container Apps Environment can read only the certificate it needs.
+- The managed identity does not get broad access to the entire Key Vault.
+- The RBAC assignment follows the principle of least privilege.
+- The configuration works with the way Azure Container Apps authorizes certificate imports.
 
 ## References
 
