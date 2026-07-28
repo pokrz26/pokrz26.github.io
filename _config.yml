@@ -39,11 +39,10 @@ social:
   #fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/Marcin42054258 # change to your Twitter homepage
-    - https://github.com/pokrz26 # change to your GitHub homepage
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://twitter.com/Marcin42054258
+    - https://github.com/pokrz26
+    - https://www.facebook.com/MarcinPokrzywinskiFotografia
+    - https://www.linkedin.com/in/marcin-pokrzywi%C5%84ski-324520155/
 
 # Site Verification Settings
 webmaster_verifications:
