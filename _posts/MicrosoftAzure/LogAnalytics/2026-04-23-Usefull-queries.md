@@ -10,14 +10,14 @@ description: A collection of useful Log Analytics queries for managing and analy
 
 ### Get diagnostic grouped by rules and hosts
 
-```kusto
+```sql
 AzureDiagnostics
 | summarize by host_s, ruleName_s
 ```
 
 ### Get diagnostic grouped by rules for specific host
 
-```kusto
+```sql
 AzureDiagnostics
 | where host_s == '<host-name>'
 | summarize by ruleName_s
@@ -25,7 +25,7 @@ AzureDiagnostics
 
 ### Get diagnostics fer specific host and rule
 
-```kusto
+```sql
 AzureDiagnostics
 | where host_s == '<host-name>'
 | where ruleName_s == '<rule-name>'
