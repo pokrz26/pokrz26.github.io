@@ -101,12 +101,12 @@ public interface IClientTokenProvider
 public class ClientTokenProvider : IClientTokenProvider
 {
     private readonly ClientOptions _options;
-    private readonly TokenCredential _tokenCreential;
+    private readonly TokenCredential _tokenCredential;
 
     public ClientTokenProvider(IOptions<ClientOptions> options)
     {
         _options = options.Value;
-        _tokenCreential = new ClientCertificateCredential(
+        _tokenCredential = new ClientCertificateCredential(
             tenantId: _options.TenantId,
             clientId: _options.ClientId,
             clientCertificatePath: $"Cert:/CurrentUser/My/{_options.CertificateThumbPrint}");
@@ -114,7 +114,7 @@ public class ClientTokenProvider : IClientTokenProvider
 
     public async Task<string> GetToken(CancellationToken cancellationToken = default)
     {
-        var token = await _tokenCreential.GetTokenAsync(
+        var token = await _tokenCredential.GetTokenAsync(
             new TokenRequestContext([_options.Scope]),
             cancellationToken);
 
