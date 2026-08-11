@@ -20,31 +20,41 @@ az login
 ## Login with tenant
 
 ```powershell
-az login --tenant <tenant-id>
+az login `
+  --tenant <tenant-id>
 ```
 
 ## List subscriptions
 
 ```powershell
-az account list --output table
+az account list `
+  --output table
 ```
 
 ## Show current subscription
 
 ```powershell
-az account show --output table
+az account show `
+  --output table
 ```
 
 ## Set active subscription
 
 ```powershell
-az account set --subscription <subscription-id>
+az account set `
+  --subscription <subscription-id>
 ```
 
 ## Generate sas for blob storage with read and list rights
 
 ```powershell
-az storage container generate-sas --account-name <storage-account-name> --name <container-name> --permissions lr --expiry '2024-11-06T16:42Z' --auth-mode login --as-user
+az storage container generate-sas `
+  --account-name <storage-account-name> `
+  --name <container-name> `
+  --permissions lr `
+  --expiry '2024-11-06T16:42Z' `
+  --auth-mode login `
+  --as-user
 ```
 
 ## Check resource name availability with Azure Resource Manager API
@@ -58,11 +68,19 @@ Use this pattern to verify whether a resource name is available in the selected 
 <!-- markdownlint-restore -->
 
 ```powershell
-az rest --method post --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/<resource-provider>/<check-name-path>?api-version=<api-version>' --headers 'Content-Type=application/json' --body "{'name':'<resource-name>','type':'<resource-type>'}"
+az rest `
+  --method post `
+  --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/<resource-provider>/<check-name-path>?api-version=<api-version>' `
+  --headers 'Content-Type=application/json' `
+  --body "{'name':'<resource-name>','type':'<resource-type>'}"
 ```
 
 Example for Key Vault:
 
 ```powershell
-az rest --method post --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/Microsoft.KeyVault/checkNameAvailability?api-version=2019-09-01' --headers 'Content-Type=application/json' --body "{'name':'<key-vault-name>','type':'Microsoft.KeyVault/vaults'}"
+az rest `
+  --method post `
+  --uri 'https://management.azure.com/subscriptions/<subscription-id>/providers/Microsoft.KeyVault/checkNameAvailability?api-version=2019-09-01' `
+  --headers 'Content-Type=application/json' `
+  --body "{'name':'<key-vault-name>','type':'Microsoft.KeyVault/vaults'}"
 ```

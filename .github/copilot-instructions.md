@@ -10,6 +10,7 @@ Examples:
 - Use `<resource-group-name>` and `<aks-cluster-name>` for Azure CLI samples
 - Use `<pod-name>`, `<job-name>`, `<context-name>`, and similar placeholders for Kubernetes examples
 - For powershell scripts use `"{'name':'<resource-name>','type':'<resource-type>'}"` instead of `'{"name":"<resource-name>","type":"<resource-type>"}'` format as json body.
+- In scripts use two spaces instead of tabs for indentation.
 
 Keep placeholder names descriptive and consistent with the command they are used in.
 

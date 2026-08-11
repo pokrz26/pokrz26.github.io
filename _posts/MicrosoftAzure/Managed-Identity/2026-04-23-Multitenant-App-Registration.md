@@ -36,16 +36,16 @@ List and select the appropriate subscription:
 ```powershell
 # List all subscriptions
 az account list `
-    --all
+  --all
 
 # Find specific subscription by name
 az account list `
-    --all `
-    --query "[?contains(name, '<subscription-name>')].{Id:id, Name:name}"
+  --all `
+  --query "[?contains(name, '<subscription-name>')].{Id:id, Name:name}"
 
 # Set active subscription
 az account set `
-    -s <subscription-id>
+  -s <subscription-id>
 ```
 
 #### If the tenant has no subscription
@@ -58,8 +58,8 @@ az account tenant list
 
 # Login to specific tenant without subscription
 az login `
-    --tenant <tenant-id> `
-    --allow-no-subscriptions
+  --tenant <tenant-id> `
+  --allow-no-subscriptions
 ```
 
 ### Step 2: Configure Multitenant Support
@@ -69,9 +69,9 @@ az login `
 ```powershell
 # Find app by display name and get its ID
 $clientId = az ad app list `
-    --filter "displayName eq 'YourAppName'" `
-    --query '[0].appId' `
-    -o tsv
+  --filter "displayName eq 'YourAppName'" `
+  --query '[0].appId' `
+  -o tsv
 ```
 
 #### Update the sign-in audience
@@ -79,8 +79,8 @@ $clientId = az ad app list `
 ```powershell
 # Configure app registration for multitenant access
 az ad app update `
-    --id $clientId `
-    --sign-in-audience AzureADMultipleOrgs
+  --id $clientId `
+  --sign-in-audience AzureADMultipleOrgs
 ```
 
 **Note:** Available sign-in audience values:
@@ -101,7 +101,7 @@ Once connected to the destination tenant, create the service principal:
 ```powershell
 # Create service principal using the app registration's client ID
 az ad sp create `
-    --id $clientId
+  --id $clientId
 ```
 
 This provisions the application in the destination tenant and allows you to assign it permissions and roles.
@@ -113,6 +113,6 @@ To verify the service principal was created successfully:
 ```powershell
 # List service principals by app ID
 az ad sp list `
-    --filter "appId eq '${clientId}'" `
-    --query '[].{DisplayName:displayName, ObjectId:id}'
+  --filter "appId eq '${clientId}'" `
+  --query '[].{DisplayName:displayName, ObjectId:id}'
 ```

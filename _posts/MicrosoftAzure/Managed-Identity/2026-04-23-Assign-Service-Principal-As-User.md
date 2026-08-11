@@ -27,15 +27,17 @@ Get the object ID of the service principal that will be granted access to the ta
 
 ```powershell
 $sourceAppObjectId = az ad sp list `
-    --filter "displayName eq '<source-app-name>' and servicePrincipalType eq 'Application'" `
-    --query '[0].id' `
-    --output tsv
+  --filter "displayName eq '<source-app-name>' and servicePrincipalType eq 'Application'" `
+  --query '[0].id' `
+  --output tsv
 ```
 
 If you want to assign role to system assigned managed identity, use the following command to get the object ID:
 
 ```powershell
-az ad sp list --display-name '<source-app-name>' --query '[0].appId'
+az ad sp list `
+  --display-name '<source-app-name>' `
+  --query '[0].appId'
 ```
 
 ### Step 2: Retrieve the Target Service Principal Object ID
@@ -44,9 +46,9 @@ Get the object ID of the target application where the role assignment will be cr
 
 ```powershell
 $targetAppObjectId = az ad sp list `
-    --filter "displayName eq '<target-app-name>' and servicePrincipalType eq 'Application'" `
-    --query '[0].id' `
-    --output tsv
+  --filter "displayName eq '<target-app-name>' and servicePrincipalType eq 'Application'" `
+  --query '[0].id' `
+  --output tsv
 ```
 
 ### Step 3: List Available App Roles
@@ -55,22 +57,22 @@ Retrieve the available app roles from the target application to identify the app
 
 ```powershell
 az ad sp show `
-    --id $targetAppObjectId `
-    --query 'appRoles' `
-    | ConvertFrom-Json `
-    | Select-Object displayName, value, id `
-    | Format-Table
+  --id $targetAppObjectId `
+  --query 'appRoles' `
+  | ConvertFrom-Json `
+  | Select-Object displayName, value, id `
+  | Format-Table
 ```
 
 Or run the below command to filter the app role by display name and get the corresponding role ID.
 
 ```powershell
 $roleId = (az ad sp show `
-    --id $targetAppObjectId `
-    --query 'appRoles' `
-    | ConvertFrom-Json `
-    | Select-Object displayName, value, id `
-    | Where-Object { $_.displayName -eq "<role-display-name>" })[0].id
+  --id $targetAppObjectId `
+  --query 'appRoles' `
+  | ConvertFrom-Json `
+  | Select-Object displayName, value, id `
+  | Where-Object { $_.displayName -eq "<role-display-name>" })[0].id
 ```
 
 ### Step 4: Create the App Role Assignment
@@ -79,10 +81,10 @@ Assign the selected role to the source service principal in the context of the t
 
 ```powershell
 az rest `
-    --method POST `
-    --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments" `
-    --headers "Content-Type=application/json" `
-    --body "{'principalId': '${sourceAppObjectId}', 'resourceId': '${targetAppObjectId}', 'appRoleId': '${roleId}'}"
+  --method POST `
+  --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments" `
+  --headers "Content-Type=application/json" `
+  --body "{'principalId': '${sourceAppObjectId}', 'resourceId': '${targetAppObjectId}', 'appRoleId': '${roleId}'}"
 ```
 
 ## Verification
@@ -91,8 +93,8 @@ To verify the role assignment was successful:
 
 ```powershell
 az rest `
-    --method GET `
-    --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments"
+  --method GET `
+  --url "https://graph.microsoft.com/v1.0/servicePrincipals/${sourceAppObjectId}/appRoleAssignments"
 ```
 
 ## Example Usage in C\#
