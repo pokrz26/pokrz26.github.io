@@ -75,3 +75,41 @@ git stash pop
 ```powershell
 git pull --rebase
 ```
+
+## Remote Management
+
+### List remotes
+
+```powershell
+git remote -v
+```
+
+### Add a new remote
+
+```powershell
+git remote add <remote-name> <repository-url>
+```
+
+### Remove a remote
+
+```powershell
+git remote remove <remote-name>
+```
+
+### Rename a remote
+
+```powershell
+git remote rename <old-remote-name> <new-remote-name>
+```
+
+### Update remote URL
+
+```powershell
+git remote set-url <remote-name> <new-repository-url>
+```
+
+### Show remote details
+
+```powershell
+git remote show <remote-name>
+```
