@@ -32,8 +32,11 @@ Repositories use `defaultImagesToKeep` unless their name starts with a prefix in
 - Permission to deploy resources and create role assignments in the registry's resource group.
 - Azure CLI authenticated to the correct subscription.
 
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
 > The task has permission to delete images from the registry. Test the purge command with `--dry-run` before enabling deletion in a production registry.
 > {: .prompt-warning }
+<!-- markdownlint-restore -->
 
 ## Bicep Template
 
