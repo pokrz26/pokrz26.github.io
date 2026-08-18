@@ -35,7 +35,7 @@ Repositories use `defaultImagesToKeep` unless their name starts with a prefix in
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable -->
 > The task has permission to delete images from the registry. Test the purge command with `--dry-run` before enabling deletion in a production registry.
-> {: .prompt-warning }
+{: .prompt-warning }
 <!-- markdownlint-restore -->
 
 ## Bicep Template

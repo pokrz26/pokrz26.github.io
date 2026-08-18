@@ -106,7 +106,7 @@ Every callout must be enclosed by this complete wrapper, regardless of its type:
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable -->
 > Callout text.
-> {: .prompt-info }
+{: .prompt-info }
 <!-- markdownlint-restore -->
 ```
 
@@ -120,10 +120,9 @@ Do not insert empty lines within the wrapper. Do not omit `markdownlint-capture`
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable -->
 > Configuration must be set on the Container Apps Environment, not individual apps.
-> {: .prompt-info }
+{: .prompt-info }
 <!-- markdownlint-restore -->
 ```
-
 Use `{: .prompt-info }` for:
 
 - Important contextual notes
@@ -136,7 +135,7 @@ Use `{: .prompt-info }` for:
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable -->
 > Use the `--output json` flag for programmatic parsing of Azure CLI results.
-> {: .prompt-tip }
+{: .prompt-tip }
 <!-- markdownlint-restore -->
 ```
 
@@ -152,7 +151,7 @@ Use `{: .prompt-tip }` for:
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable -->
 > Non-root containers cannot bind to privileged ports (below 1024). Use port 8080 or higher.
-> {: .prompt-warning }
+{: .prompt-warning }
 <!-- markdownlint-restore -->
 ```
 
@@ -169,10 +168,9 @@ Use `{: .prompt-warning }` for:
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable -->
 > This command permanently deletes all data. There is no recovery.
-> {: .prompt-danger }
+{: .prompt-danger }
 <!-- markdownlint-restore -->
 ```
-
 Use `{: .prompt-danger }` for:
 
 - Data loss risks
