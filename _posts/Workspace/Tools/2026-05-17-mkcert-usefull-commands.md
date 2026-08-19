@@ -1,7 +1,7 @@
 ---
 title: mkcert usefull commands
 date: 2026-05-17 14:30:00 +0200
-categories: [Local Environment, Tools]
+categories: [Workspace, Tools]
 tags: [mkcert]
 description: Here you can find mkcert usefull commands.
 ---

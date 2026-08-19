@@ -1,8 +1,8 @@
 ---
 title: Cosmos DB emulator
 date: 2026-04-26 12:20:00 +0200
-categories: [Local Environment, Emulators]
-tags: [local environemnt, emulator, Cosmos DB]
+categories: [Workspace, Emulators]
+tags: [workspace, emulator, Cosmos DB]
 description: A guide on how to start Cosmos DB emulator.
 ---
 

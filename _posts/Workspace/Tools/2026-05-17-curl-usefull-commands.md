@@ -1,7 +1,7 @@
 ---
 title: curl usefull Commands
 date: 2026-05-17 14:30:00 +0200
-categories: [Local Environment, Tools]
+categories: [Workspace, Tools]
 tags: [curl]
 description: Here you can find curl usefull commands.
 ---

@@ -1,8 +1,8 @@
 ---
 title: s3 emulator
 date: 2026-04-26 12:10:00 +0200
-categories: [Local Environment, Emulators]
-tags: [local environemnt, emulator, s3]
+categories: [Workspace, Emulators]
+tags: [workspace, emulator, s3]
 description: A guide on how to start s3 emulator.
 ---
 

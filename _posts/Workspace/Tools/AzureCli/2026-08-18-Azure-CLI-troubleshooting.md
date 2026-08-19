@@ -1,7 +1,7 @@
 ---
 title: Azure CLI troubleshooting
 date: 2026-08-18 16:05:00 +0200
-categories: [Local Environment, Tools, Azure CLI]
+categories: [Workspace, Tools, Azure CLI]
 tags: [azure, azure-cli, troubleshooting, authentication, wam]
 description: Common Azure CLI troubleshooting patterns, including WAM login failures, stale cached sessions, and tenant-switch issues.
 ---
@@ -20,7 +20,9 @@ When Azure CLI uses the Windows broker integration, some machines can fail with 
 AADSTS1400011: Session key is not provided
 ```
 
-This usually means the cached broker session is stale or invalid for the current tenant context. To fix this run below commands.
+This usually means the cached broker session is stale or invalid for the current tenant context. One additional option is to disconnect the affected work or school account from Windows and attach it again: go to Settings > Accounts > Access work or school, select the account, choose Disconnect, then sign back in and try `az login` again.
+
+If that does not resolve the issue, use the commands below.
 
 ```powershell
 az config set core.enable_broker_on_windows=false

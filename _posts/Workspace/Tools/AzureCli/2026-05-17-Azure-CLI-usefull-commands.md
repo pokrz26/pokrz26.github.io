@@ -1,7 +1,7 @@
 ---
 title: Azure CLI usefull commands
 date: 2026-07-14 00:00:00 +0200
-categories: [Local Environment, Tools, Azure CLI]
+categories: [Workspace, Tools, Azure CLI]
 tags: [azure, azure-cli]
 description: Here you can find Azure Cli usefull commands.
 ---

@@ -1,7 +1,7 @@
 ---
 title: PowerShell usefull tips
 date: 2026-08-11 18:45:00 +0200
-categories: [Local Environment, Terminal, PowerShell]
+categories: [Workspace, Terminal, PowerShell]
 tags: [powershell, json, troubleshooting]
 description: Why ConvertFrom-Json can flatten single-item arrays and how to preserve array behavior with -NoEnumerate.
 ---

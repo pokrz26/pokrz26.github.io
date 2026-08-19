@@ -1,8 +1,8 @@
 ---
 title: PowerShell usefull commands
 date: 2026-04-26 12:12:00 +0200
-categories: [Local Environment, Terminal, PowerShell]
-tags: [local environemnt, terminal, powershell]
+categories: [Workspace, Terminal, PowerShell]
+tags: [workspace, terminal, powershell]
 description: Usefull commands for powershell.
 ---
 
