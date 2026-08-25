@@ -8,9 +8,7 @@ description: Deploy an Azure Container Registry Task with Bicep that keeps a con
 
 ## Document Information
 
-- **Azure CLI:** 2.84.0 or later
-- **Bicep CLI:** Installed through the Azure CLI
-- **ACR CLI image:** `mcr.microsoft.com/acr/acr-cli:0.19`
+- **Azure CLI:** 2.84.0
 
 ## Overview
 
@@ -188,6 +186,7 @@ Log in and select the subscription that contains the registry:
 
 ```powershell
 az login
+az account list
 az account set --subscription "<subscription-id>"
 ```
 
