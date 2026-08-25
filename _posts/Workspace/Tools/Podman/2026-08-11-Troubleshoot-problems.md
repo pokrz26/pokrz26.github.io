@@ -1,7 +1,7 @@
 ---
 title: Troubleshoot Podman problems
 date: 2026-08-11 17:35:00 +0200
-categories: [Local Environment, Tools, Podman]
+categories: [Workspace, Tools, Podman]
 tags: [podman, wsl, windows, troubleshooting]
 description: Common Podman troubleshooting steps for local Windows environments.
 ---

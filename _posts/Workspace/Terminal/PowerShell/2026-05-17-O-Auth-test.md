@@ -1,8 +1,8 @@
 ---
 title: PowerShell oAuth test
 date: 2026-05-17 14:17:00 +0200
-categories: [Local Environment, Terminal, PowerShell]
-tags: [local environemnt, terminal, powershell]
+categories: [Workspace, Terminal, PowerShell]
+tags: [workspace, terminal, powershell]
 description: Using PowerShell to make on oAuth authorization.
 ---
 

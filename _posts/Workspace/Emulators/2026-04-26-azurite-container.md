@@ -1,8 +1,8 @@
 ---
 title: azurite emulator
 date: 2026-04-26 12:11:00 +0200
-categories: [Local Environment, Emulators]
-tags: [local environemnt, emulator, azurite]
+categories: [Workspace, Emulators]
+tags: [workspace, emulator, azurite]
 description: A guide on how to start azurite emulator.
 ---
 
@@ -102,3 +102,5 @@ docker run `
   -d mcr.microsoft.com/azure-storage/azurite:latest `
   azurite --location /data --cert /data/cert/127.0.0.1.pem --key /data/cert/127.0.0.1-key.pem --oauth basic --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0 --skipApiVersionCheck
 ```
+
+

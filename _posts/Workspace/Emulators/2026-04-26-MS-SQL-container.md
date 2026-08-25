@@ -1,8 +1,8 @@
 ---
 title: MS SQL emulator
 date: 2026-04-26 12:12:00 +0200
-categories: [Local Environment, Emulators]
-tags: [local environemnt, emulator, MS SQL]
+categories: [Workspace, Emulators]
+tags: [workspace, emulator, MS SQL]
 description: A guide on how to start MS SQL emulator.
 ---
 

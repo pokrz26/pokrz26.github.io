@@ -1,7 +1,7 @@
 ---
 title: git usefull commands
 date: 2026-05-17 14:35:00 +0200
-categories: [Local Environment, Tools]
+categories: [Workspace, Tools]
 tags: [git]
 description: Here you can git rclone usefull commands.
 ---
