@@ -20,7 +20,7 @@ When Azure CLI uses the Windows broker integration, some machines can fail with 
 AADSTS1400011: Session key is not provided
 ```
 
-This usually means the cached broker session is stale or invalid for the current tenant context. One additional option is to disconnect the affected work or school account from Windows and attach it again: go to Settings > Accounts > Access work or school, select the account, choose Disconnect, then sign back in and try `az login` again.
+This usually means the cached broker session is stale or invalid for the current tenant context. One additional option is to disconnect the affected work or school account from Windows and attach it again: go to `Settings > Accounts > Access work or school`, select the account, choose Disconnect, then sign back in. Other thing to check is if you have configured Windows Hello. To check that go to `Settings > Accounts > Sign in options` and configure it. After that try `az login` again.
 
 If that does not resolve the issue, use the commands below.
 
