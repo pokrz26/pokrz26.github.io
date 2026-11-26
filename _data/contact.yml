@@ -17,12 +17,11 @@
 #   url:  ''                  # Fill with your Mastodon account page, rel="me" will be applied for verification
 
 - type: linkedin
-  icon: 'fab fa-linkedin'
-  url:  'https://www.linkedin.com/in/marcin-pokrzywi%C5%84ski-324520155/'
+  icon: "fab fa-linkedin"
+  url: "https://www.linkedin.com/in/marcin-pokrzywi%C5%84ski-324520155/"
 - type: facebook
   icon: "fab fa-facebook"
   url: "https://www.facebook.com/MarcinPokrzywinskiFotografia"
-
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'
 #   url:  ''                  # Fill with your stackoverflow homepage
